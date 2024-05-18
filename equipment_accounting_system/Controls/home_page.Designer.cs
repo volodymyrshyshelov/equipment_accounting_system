@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             Label lblTotal;
-            Label label2;
             Label label3;
             Label label4;
             Label label5;
@@ -55,7 +54,6 @@
             guna2CustomGradientPanel1 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             listViewUserEquipment = new ListView();
             lblTotal = new Label();
-            label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
@@ -75,34 +73,22 @@
             lblTotal.Padding = new Padding(0, 10, 0, 0);
             lblTotal.Size = new Size(302, 60);
             lblTotal.TabIndex = 1;
-            lblTotal.Text = "Усього обладнання на підприємстві";
+            lblTotal.Text = "Усього обладнання на підприємстві:";
             lblTotal.TextAlign = ContentAlignment.TopCenter;
-            // 
-            // label2
-            // 
-            label2.Dock = DockStyle.Bottom;
-            label2.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(0, 376);
-            label2.Margin = new Padding(3, 10, 3, 0);
-            label2.Name = "label2";
-            label2.Padding = new Padding(0, 10, 0, 0);
-            label2.Size = new Size(302, 38);
-            label2.TabIndex = 2;
-            label2.Text = "З них";
-            label2.TextAlign = ContentAlignment.TopCenter;
             // 
             // label3
             // 
             label3.Dock = DockStyle.Bottom;
             label3.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(0, 300);
+            label3.Location = new Point(0, 338);
             label3.Margin = new Padding(3, 10, 3, 0);
             label3.Name = "label3";
             label3.Padding = new Padding(0, 10, 0, 0);
             label3.Size = new Size(302, 38);
             label3.TabIndex = 4;
-            label3.Text = "Закріплено за Вами ";
+            label3.Text = "Закріплено за Вами: ";
             label3.TextAlign = ContentAlignment.TopCenter;
+            label3.Click += label3_Click;
             // 
             // label4
             // 
@@ -134,7 +120,7 @@
             // 
             lblUserEquipmentCount.Dock = DockStyle.Bottom;
             lblUserEquipmentCount.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            lblUserEquipmentCount.Location = new Point(0, 338);
+            lblUserEquipmentCount.Location = new Point(0, 376);
             lblUserEquipmentCount.Margin = new Padding(3, 10, 3, 0);
             lblUserEquipmentCount.Name = "lblUserEquipmentCount";
             lblUserEquipmentCount.Padding = new Padding(0, 10, 0, 0);
@@ -215,7 +201,6 @@
             guna2CustomGradientPanel2.BorderThickness = 2;
             guna2CustomGradientPanel2.Controls.Add(label3);
             guna2CustomGradientPanel2.Controls.Add(lblUserEquipmentCount);
-            guna2CustomGradientPanel2.Controls.Add(label2);
             guna2CustomGradientPanel2.Controls.Add(infographicPanel);
             guna2CustomGradientPanel2.Controls.Add(lblTotalEquipment);
             guna2CustomGradientPanel2.Controls.Add(lblTotal);

@@ -51,10 +51,10 @@ namespace equipment_accounting_system.Controls
         {
             if (listViewUserEquipment.SelectedItems.Count > 0)
             {
-                int equipmentId = Convert.ToInt32(listViewUserEquipment.SelectedItems[0].Tag); 
+                int equipmentId = Convert.ToInt32(listViewUserEquipment.SelectedItems[0].Tag);
                 frm_Add_Edit_Equipment editForm = new frm_Add_Edit_Equipment(equipmentId);
                 editForm.ShowDialog();
-                LoadUserEquipment(); 
+                LoadUserEquipment();
             }
         }
 
@@ -111,7 +111,7 @@ namespace equipment_accounting_system.Controls
                                 ListViewItem item = new ListViewItem(reader["name"].ToString());
                                 item.SubItems.Add(reader["inventorynumber"].ToString());
                                 item.SubItems.Add(reader["type"].ToString());
-                                item.Tag = reader["id"]; 
+                                item.Tag = reader["id"];
                                 listViewUserEquipment.Items.Add(item);
                             }
                         }
@@ -167,7 +167,7 @@ namespace equipment_accounting_system.Controls
                     lblTotalEquipment.Text = $"{totalCount}";
                     lblUserEquipmentCount.Text = $"{userCount}";
 
-                    
+
                     infographicPanel.Invalidate();
                 }
             }
@@ -193,5 +193,10 @@ namespace equipment_accounting_system.Controls
 
         private int totalCount; // Общее количество записей
         private int userCount; // Количество записей, закрепленных за пользователем
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
