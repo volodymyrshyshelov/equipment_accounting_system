@@ -16,9 +16,12 @@ namespace equipment_accounting_system
 {
     public partial class frm_Authorization : Form
     {
+        private readonly log_Helper logHelper;
+
         public frm_Authorization()
         {
             InitializeComponent();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
 
         private void frm_Authorization_Load(object sender, EventArgs e)
@@ -70,19 +73,52 @@ namespace equipment_accounting_system
 
                                 if (storedPasswordHash == txt_password.Text)
                                 {
-                                    
                                     int userID = Convert.ToInt32(dr["userid"]);
+
+                                    // Запись успешного входа в лог
+                                    var logEntry = new log_Entry
+                                    {
+                                        UserId = userID,
+                                        TableName = "userlist",
+                                        LogType = "INFO",
+                                        LogMessage = "Успішний вхід в систему.",
+                                        Details = $"Username: {txt_username.Text}"
+                                    };
+                                    logHelper.InsertLogEntry(logEntry);
+
                                     frm_Dashboard dashboardForm = new frm_Dashboard(userID);
                                     dashboardForm.Show();
                                     this.Hide();
                                 }
                                 else
                                 {
+                                    // Запись неудачной попытки входа в лог
+                                    var logEntry = new log_Entry
+                                    {
+                                        UserId = 0, // Неудачная попытка входа, пользователь неизвестен
+                                        TableName = "userlist",
+                                        LogType = "ERROR",
+                                        LogMessage = "Невдала спроба входу - невірний пароль.",
+                                        Details = $"Username: {txt_username.Text}"
+                                    };
+                                    logHelper.InsertLogEntry(logEntry);
+
                                     throw new Exception("Невірний пароль.");
                                 }
                             }
                             else
                             {
+                                // Запись неудачной попытки входа в лог
+                                var logEntry = new log_Entry
+                                {
+                                    UserId = 0, // Неудачная попытка входа, пользователь неизвестен
+                                    TableName = "userlist",
+                                    LogType = "ERROR",
+                                    LogMessage = "Невдала спроба входу - невірний логін.",
+                                    Details = $"Username: {txt_username.Text}"
+                                };
+                                logHelper.InsertLogEntry(logEntry);
+
                                 throw new Exception("Невірний логін.");
                             }
                         }

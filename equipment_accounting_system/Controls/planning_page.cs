@@ -1,4 +1,5 @@
 ﻿using equipment_accounting_system.Additional_Forms;
+using equipment_accounting_system.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace equipment_accounting_system.Controls
 {
     public partial class planning_page : UserControl
     {
+        private readonly log_Helper logHelper;
         public planning_page()
         {
             InitializeComponent();
@@ -26,6 +28,7 @@ namespace equipment_accounting_system.Controls
             cmb_plan_type.SelectedIndexChanged += new System.EventHandler(this.cmb_plan_type_SelectedIndexChanged);
             cmb_plan_priority.SelectedIndexChanged += new System.EventHandler(this.cmb_plan_priority_SelectedIndexChanged);
             InitializeDateTimePickers();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
         private void InitializeComboBoxes()
         {
@@ -265,8 +268,20 @@ namespace equipment_accounting_system.Controls
                         cmd.Parameters.AddWithValue("@in_number", taskId);
                         cmd.ExecuteNonQuery();
                         LoadPlansWithFilters();
+                        var logEntry = new log_Entry
+                        {
+                            UserId = 0,
+                            TableName = "planning",
+                            LogType = "INFO",
+                            LogMessage = "Видалення запису.",
+                            Details = $"Task ID: {taskId}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
                     }
                 }
+
+
+
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error: {ex.Message}", "Delete Task Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using equipment_accounting_system.Classes;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,11 @@ namespace equipment_accounting_system.Additional_Forms
 {
     public partial class frm_Registration : Form
     {
+        private readonly log_Helper logHelper;
         public frm_Registration()
         {
             InitializeComponent();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
 
         private void txt_username_TextChanged(object sender, EventArgs e)
@@ -74,8 +77,70 @@ namespace equipment_accounting_system.Additional_Forms
 
         private void btn_register_Click(object sender, EventArgs e)
         {
+            //if (string.IsNullOrWhiteSpace(txt_username.Text) || string.IsNullOrWhiteSpace(txt_password.Text) || string.IsNullOrWhiteSpace(txt_confirm_password.Text) ||
+            //string.IsNullOrWhiteSpace(txt_email.Text))
+            //{
+            //    MessageBox.Show("Заповніть обов'язкові поля!", "Помилка реєстрації", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            //if (txt_password.Text != txt_confirm_password.Text)
+            //{
+            //    MessageBox.Show("Паролі не співпадають!", "Помилка реєстрації", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            //try
+            //{
+            //    using (var conn = new NpgsqlConnection(ConfigurationManager.AppSettings.Get("LogAndReg")))
+            //    {
+            //        conn.Open();
+            //        string insertQuery = "INSERT INTO UserList (Username, PasswordHash, Email, FullName, ProfileImage) VALUES (@Username, @PasswordHash, @Email, @FullName, @ProfileImage)";
+            //        using (var cmd = new NpgsqlCommand(insertQuery, conn))
+            //        {
+            //            cmd.Parameters.AddWithValue("@Username", txt_username.Text);
+            //            cmd.Parameters.AddWithValue("@PasswordHash", txt_password.Text); // Хеширование пароля должно быть добавлено здесь
+            //            cmd.Parameters.AddWithValue("@Email", txt_email.Text);
+            //            cmd.Parameters.AddWithValue("@FullName", txt_real_name.Text);
+
+            //            if (btn_add_image.Image != null)
+            //            {
+            //                using (MemoryStream ms = new MemoryStream())
+            //                {
+            //                    btn_add_image.Image.Save(ms, btn_add_image.Image.RawFormat);
+            //                    cmd.Parameters.AddWithValue("@ProfileImage", ms.ToArray());
+            //                }
+            //            }
+            //            else
+            //            {
+            //                cmd.Parameters.AddWithValue("@ProfileImage", DBNull.Value);
+            //            }
+
+            //            cmd.ExecuteNonQuery();
+            //        }
+            //        var logEntry = new log_Entry
+            //        {
+            //            UserId = /* ID зарегистрированного пользователя */,
+            //            TableName = "userlist",
+            //            LogType = "INFO",
+            //            LogMessage = "Пользователь успешно зарегистрирован.",
+            //            Details = $"Username: {txt_username.Text}, FullName: {txt_real_name.Text}"
+            //        };
+            //        logHelper.InsertLogEntry(logEntry);
+
+            //        MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        this.Close();
+            //        frm_Authorization frm_Authorization = new frm_Authorization();
+            //        frm_Authorization.Show();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Помилка реєстрації", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+
             if (string.IsNullOrWhiteSpace(txt_username.Text) || string.IsNullOrWhiteSpace(txt_password.Text) || string.IsNullOrWhiteSpace(txt_confirm_password.Text) ||
-            string.IsNullOrWhiteSpace(txt_email.Text))
+        string.IsNullOrWhiteSpace(txt_email.Text))
             {
                 MessageBox.Show("Заповніть обов'язкові поля!", "Помилка реєстрації", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -92,7 +157,7 @@ namespace equipment_accounting_system.Additional_Forms
                 using (var conn = new NpgsqlConnection(ConfigurationManager.AppSettings.Get("LogAndReg")))
                 {
                     conn.Open();
-                    string insertQuery = "INSERT INTO UserList (Username, PasswordHash, Email, FullName, ProfileImage) VALUES (@Username, @PasswordHash, @Email, @FullName, @ProfileImage)";
+                    string insertQuery = "INSERT INTO UserList (Username, PasswordHash, Email, FullName, ProfileImage) VALUES (@Username, @PasswordHash, @Email, @FullName, @ProfileImage) RETURNING id";
                     using (var cmd = new NpgsqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@Username", txt_username.Text);
@@ -113,19 +178,30 @@ namespace equipment_accounting_system.Additional_Forms
                             cmd.Parameters.AddWithValue("@ProfileImage", DBNull.Value);
                         }
 
-                        cmd.ExecuteNonQuery();
-                    }
+                        int userId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                    frm_Authorization frm_Authorization = new frm_Authorization();
-                    frm_Authorization.Show();
+                        var logEntry = new log_Entry
+                        {
+                            UserId = userId,
+                            TableName = "userlist",
+                            LogType = "INFO",
+                            LogMessage = "Успішна реєстрація користувача.",
+                            Details = $"Username: {txt_username.Text}, FullName: {txt_real_name.Text}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
+
+                        MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                        frm_Authorization frm_Authorization = new frm_Authorization();
+                        frm_Authorization.Show();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Помилка реєстрації", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)

@@ -1,4 +1,6 @@
 ﻿using equipment_accounting_system.Additional_Forms;
+using equipment_accounting_system.Classes;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,13 @@ namespace equipment_accounting_system.Controls
     public partial class inventory_page : UserControl
     {
         private ContextMenuStrip contextMenu;
+        private readonly log_Helper logHelper;
         public inventory_page()
         {
             InitializeComponent();
             LoadTables();
             InitializeContextMenu();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
         private void inventory_page_Load(object sender, EventArgs e)
         {
@@ -58,6 +62,15 @@ namespace equipment_accounting_system.Controls
             }
             catch (Exception ex)
             {
+                var logEntry = new log_Entry
+                {
+                    UserId = 0,
+                    TableName = "table_name",
+                    LogType = "ERROR",
+                    LogMessage = "Помилка завантаження таблиць.",
+                    Details = $"Tables ERROR "
+                };
+                logHelper.InsertLogEntry(logEntry);
                 MessageBox.Show(ex.Message, "Ошибка загрузки таблиц", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -87,6 +100,15 @@ namespace equipment_accounting_system.Controls
             }
             catch (Exception ex)
             {
+                var logEntry = new log_Entry
+                {
+                    UserId = 0,
+                    TableName = tableName,
+                    LogType = "ERROR",
+                    LogMessage = "Помилка завантаження.",
+                    Details = $"Equipment ERROR "
+                };
+                logHelper.InsertLogEntry(logEntry);
                 MessageBox.Show(ex.Message, "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -128,6 +150,7 @@ namespace equipment_accounting_system.Controls
             }
             catch (Exception ex)
             {
+
                 MessageBox.Show(ex.Message, "Ошибка поиска данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -203,6 +226,14 @@ namespace equipment_accounting_system.Controls
                         cmd.ExecuteNonQuery();
                     }
                 }
+                var logEntry = new log_Entry
+                {
+                    UserId = 0,
+                    TableName = "equipment1",
+                    LogType = "INFO",
+                    LogMessage = "Запис видалено успішно.",
+                    Details = $"Delete Equipment "
+                };
             }
             catch (Exception ex)
             {

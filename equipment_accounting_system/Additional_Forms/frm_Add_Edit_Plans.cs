@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using equipment_accounting_system.Classes;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,12 +16,15 @@ namespace equipment_accounting_system.Additional_Forms
     public partial class frm_Add_Edit_Plans : Form
     {
         private int taskId;
+        private readonly log_Helper logHelper;
+
         public frm_Add_Edit_Plans()
         {
             InitializeComponent();
             LoadUsers();
             InitializeComboBoxes();
             InitializeDateTimePickers();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
         public frm_Add_Edit_Plans(int taskId)
         {  
@@ -30,6 +34,7 @@ namespace equipment_accounting_system.Additional_Forms
             InitializeDateTimePickers();
             this.taskId = taskId;
             LoadTaskData();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
         private void InitializeDateTimePickers()
         {
@@ -70,6 +75,15 @@ namespace equipment_accounting_system.Additional_Forms
                                 }
                             }
                         }
+                        var logEntry = new log_Entry
+                        {
+                            UserId = 0, 
+                            TableName = "planning",
+                            LogType = "INFO",
+                            LogMessage = "Завантаження задач.",
+                            Details = $"Task ID: {taskId}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
                     }
                     catch (Exception ex)
                     {
@@ -112,6 +126,17 @@ namespace equipment_accounting_system.Additional_Forms
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Запис додано успішно.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        var logEntry = new log_Entry
+                        {
+                            UserId = 0, 
+                            TableName = "planning",
+                            LogType = "INFO",
+                            LogMessage = "Додано новий запис.",
+                            Details = $"InNumber: {txt_in_number.Text}, Name: {txt_name.Text}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
+
                         this.Close();
                     }
                 }
@@ -145,6 +170,17 @@ namespace equipment_accounting_system.Additional_Forms
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Запис оновлено успішно.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        var logEntry = new log_Entry
+                        {
+                            UserId = 0, 
+                            TableName = "planning",
+                            LogType = "INFO",
+                            LogMessage = "Запис оновлено.",
+                            Details = $"Task ID: {taskId}, InNumber: {txt_in_number.Text}, Name: {txt_name.Text}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
+
                         this.Close();
                     }
                 }

@@ -21,6 +21,7 @@ namespace equipment_accounting_system.Additional_Forms
         private int? equipmentId = null;
         private EquipmentInfo equipmentInfo;
         private db_Helper dbHelper;
+        private readonly log_Helper logHelper;
 
         public frm_Add_Edit_Equipment()
         {
@@ -29,6 +30,7 @@ namespace equipment_accounting_system.Additional_Forms
             string connectionString = ConfigurationManager.AppSettings.Get("Inventory");
             dbHelper = new db_Helper();
             dbHelper.LoadTables(connectionString, cmb_tables);
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
         public frm_Add_Edit_Equipment(int equipmentId)
         {
@@ -39,6 +41,7 @@ namespace equipment_accounting_system.Additional_Forms
             string connectionString = ConfigurationManager.AppSettings.Get("Inventory");
             dbHelper = new db_Helper();
             dbHelper.LoadTables(connectionString, cmb_tables);
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
         public frm_Add_Edit_Equipment(EquipmentInfo equipmentInfo)
         {
@@ -49,6 +52,7 @@ namespace equipment_accounting_system.Additional_Forms
             dbHelper.LoadTables(connectionString, cmb_tables);
             LoadEquipmentData();
             LoadUsers();
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
         }
 
 
@@ -98,6 +102,17 @@ namespace equipment_accounting_system.Additional_Forms
                                 }
                             }
                         }
+
+                        var logEntry = new log_Entry
+                        {
+                            UserId = 0,
+                            TableName = "equipment1",
+                            LogType = "INFO",
+                            LogMessage = "Завантаження даних обладнання.",
+                            Details = $"Equipment ID: {equipmentId.Value}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
+
                     }
                 }
                 catch (Exception ex)
@@ -185,6 +200,22 @@ namespace equipment_accounting_system.Additional_Forms
                     }
 
                     MessageBox.Show("Данные успешно сохранены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    var logEntry = new log_Entry
+                    {
+                        UserId = 0,
+                        TableName = tableName,
+                        LogType = equipmentId.HasValue ? "INFO" : "INSERT",
+                        LogMessage = equipmentId.HasValue ? "Оновлення даних обладнання." : "Додано новий запис.",
+                        Details = $"InventoryNumber: {txt_inventory_number.Text}, Name: {txt_name.Text}"
+                    };
+                    logHelper.InsertLogEntry(logEntry);
+
+
+
+
+
+
                     this.Close();
                 }
             }

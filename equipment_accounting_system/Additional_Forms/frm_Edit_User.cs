@@ -17,10 +17,12 @@ namespace equipment_accounting_system.Additional_Forms
     public partial class frm_Edit_User : Form
     {
         private int userID;
+        private readonly log_Helper logHelper;
         public frm_Edit_User(int userID)
         {
 
             this.userID = userID;
+            logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
             InitializeComponent();
             LoadUserData();
 
@@ -70,6 +72,16 @@ namespace equipment_accounting_system.Additional_Forms
 
                         cmd.ExecuteNonQuery();
                     }
+
+                    var logEntry = new log_Entry
+                    {
+                        UserId = userID,
+                        TableName = "userlist",
+                        LogType = "INFO",
+                        LogMessage = "Дані користувача оновлені успішно.",
+                        Details = $"Username: {txt_username.Text}, FullName: {txt_real_name.Text}"
+                    };
+                    logHelper.InsertLogEntry(logEntry);
 
                     MessageBox.Show("Зміни збережено успішно!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
