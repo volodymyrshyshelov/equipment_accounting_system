@@ -24,17 +24,27 @@ namespace equipment_accounting_system.Controls
         {
             InitializeComponent();
             this.userID = userID;
-            LoadUserFullName();
             LoadUserData();
-            InitializeListView();
+            InitializeListViewEquipment();
+            InitializeListViewTasks();
             InitializeContextMenu();
+            InitializeUserTasksContextMenu();
         }
-        private void InitializeListView()
+
+        private void InitializeListViewEquipment()
         {
             listViewUserEquipment.View = View.Details;
             listViewUserEquipment.Columns.Add("Назва", 100);
             listViewUserEquipment.Columns.Add("ІН", 100);
             listViewUserEquipment.Columns.Add("Тип", 80);
+        }
+
+        private void InitializeListViewTasks()
+        {
+            listViewUserTasks.View = View.Details;
+            listViewUserTasks.Columns.Add("ІН", 90);
+            listViewUserTasks.Columns.Add("Тип", 100);
+            listViewUserTasks.Columns.Add("Пріорітет", 90);
         }
 
         private void InitializeContextMenu()
@@ -45,6 +55,7 @@ namespace equipment_accounting_system.Controls
             contextMenu.Items.Add(detailsMenuItem);
             listViewUserEquipment.ContextMenuStrip = contextMenu;
         }
+
         private void DetailsMenuItem_Click(object sender, EventArgs e)
         {
             if (listViewUserEquipment.SelectedItems.Count > 0)
@@ -55,7 +66,8 @@ namespace equipment_accounting_system.Controls
                 LoadUserEquipment();
             }
         }
-        private void LoadUserFullName()
+
+        private void LoadUserData()
         {
             try
             {
@@ -71,6 +83,7 @@ namespace equipment_accounting_system.Controls
                             if (reader.Read())
                             {
                                 userFullName = reader["fullname"].ToString();
+                                
                             }
                         }
                     }
@@ -80,13 +93,12 @@ namespace equipment_accounting_system.Controls
             {
                 MessageBox.Show(ex.Message, "Ошибка загрузки полного имени пользователя", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-        private void LoadUserData()
-        {
+
             LoadUserEquipment();
             LoadTotalEquipment();
             LoadUserTasks();
         }
+
         private void LoadUserEquipment()
         {
             try
@@ -118,6 +130,7 @@ namespace equipment_accounting_system.Controls
                 MessageBox.Show(ex.Message, "Ошибка загрузки данных оборудования", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void LoadTotalEquipment()
         {
             try
@@ -170,9 +183,106 @@ namespace equipment_accounting_system.Controls
                 MessageBox.Show(ex.Message, "Ошибка загрузки данных оборудования", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void LoadUserTasks()
         {
-            // Загрузите задачи пользователя (оставим этот метод без изменений)
+            try
+            {
+                using (var conn = new NpgsqlConnection(ConfigurationManager.AppSettings.Get("Planning")))
+                {
+                    conn.Open();
+                    string query = @"
+                    SELECT in_number, type, priority
+                    FROM planning
+                    WHERE workername = @WorkerFullName
+                      AND status != 'Виконано'
+                      AND current_date BETWEEN start_date AND end_date";
+
+                    using (var cmd = new NpgsqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@WorkerFullName", userFullName);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            listViewUserTasks.Items.Clear();
+                            while (reader.Read())
+                            {
+                                var item = new ListViewItem(reader["in_number"].ToString());
+                                item.SubItems.Add(reader["type"].ToString());
+                                item.SubItems.Add(reader["priority"].ToString());
+                                listViewUserTasks.Items.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка загрузки задач пользователя", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void InitializeUserTasksContextMenu()
+        {
+            var contextMenu = new ContextMenuStrip();
+            var editItem = new ToolStripMenuItem("Редагувати завдання");
+
+            editItem.Click += EditUserTask_Click;
+
+            contextMenu.Items.Add(editItem);
+
+            listViewUserTasks.ContextMenuStrip = contextMenu;
+        }
+
+        private void EditUserTask_Click(object sender, EventArgs e)
+        {
+            if (listViewUserTasks.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Виберіть завдання для редагування.");
+                return;
+            }
+
+            var selectedItem = listViewUserTasks.SelectedItems[0];
+            var inNumber = selectedItem.SubItems[0].Text;
+            int planId = GetPlanIdByInNumber(inNumber);
+
+            if (planId != 0)
+            {
+                var addEditForm = new frm_Add_Edit_Plans(planId);
+                addEditForm.ShowDialog();
+
+                // Обновляем список задач после редактирования
+                LoadUserTasks();
+            }
+            else
+            {
+                MessageBox.Show("Не вдалося знайти запис з вказаним in_number.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private int GetPlanIdByInNumber(string inNumber)
+        {
+            int planId = 0;
+            string sql = "SELECT id FROM planning WHERE in_number = @in_number";
+
+            using (var conn = new NpgsqlConnection(ConfigurationManager.AppSettings.Get("Planning")))
+            {
+                try
+                {
+                    conn.Open();
+                    using (var cmd = new NpgsqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@in_number", inNumber);
+                        planId = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Task Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            return planId;
         }
 
         private void chart_Paint(object sender, PaintEventArgs e)
@@ -191,6 +301,5 @@ namespace equipment_accounting_system.Controls
         {
 
         }
-        
     }
 }
