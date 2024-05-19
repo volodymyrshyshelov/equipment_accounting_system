@@ -29,7 +29,6 @@ namespace equipment_accounting_system.Controls
             InitializeListView();
             InitializeContextMenu();
         }
-
         private void InitializeListView()
         {
             listViewUserEquipment.View = View.Details;
@@ -46,7 +45,6 @@ namespace equipment_accounting_system.Controls
             contextMenu.Items.Add(detailsMenuItem);
             listViewUserEquipment.ContextMenuStrip = contextMenu;
         }
-
         private void DetailsMenuItem_Click(object sender, EventArgs e)
         {
             if (listViewUserEquipment.SelectedItems.Count > 0)
@@ -57,7 +55,6 @@ namespace equipment_accounting_system.Controls
                 LoadUserEquipment();
             }
         }
-
         private void LoadUserFullName()
         {
             try
@@ -84,14 +81,12 @@ namespace equipment_accounting_system.Controls
                 MessageBox.Show(ex.Message, "Ошибка загрузки полного имени пользователя", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LoadUserData()
         {
             LoadUserEquipment();
             LoadTotalEquipment();
             LoadUserTasks();
         }
-
         private void LoadUserEquipment()
         {
             try
@@ -123,7 +118,6 @@ namespace equipment_accounting_system.Controls
                 MessageBox.Show(ex.Message, "Ошибка загрузки данных оборудования", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LoadTotalEquipment()
         {
             try
@@ -176,7 +170,6 @@ namespace equipment_accounting_system.Controls
                 MessageBox.Show(ex.Message, "Ошибка загрузки данных оборудования", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LoadUserTasks()
         {
             // Загрузите задачи пользователя (оставим этот метод без изменений)
@@ -198,5 +191,6 @@ namespace equipment_accounting_system.Controls
         {
 
         }
+        
     }
 }
