@@ -31,6 +31,8 @@
 
   <ItemGroup>
     <PackageReference Include="Bunifu.UI.WinForms" Version="7.0.0" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Dapper.SqlBuilder" Version="2.0.78" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.6" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.18" />
@@ -41,6 +43,7 @@
     <PackageReference Include="Npgsql" Version="8.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.18" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="7.0.18" />
+    <PackageReference Include="Npgsql.Json.NET" Version="8.0.3" />
     <PackageReference Include="Npgsql.NetTopologySuite" Version="7.0.7" />
     <PackageReference Include="Renci.SshNet.Async" Version="1.4.0" />
     <PackageReference Include="SnmpSharpNet" Version="0.9.6" />

@@ -18,6 +18,7 @@ namespace equipment_accounting_system.Additional_Forms
     {
         private int userID;
         private readonly log_Helper logHelper;
+        private readonly db_Helper dbHelper;
         public frm_Edit_User(int userID)
         {
 
@@ -25,8 +26,17 @@ namespace equipment_accounting_system.Additional_Forms
             logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
             InitializeComponent();
             LoadUserData();
-
+            dbHelper = new db_Helper();
+            InitializeComboBoxes();
         }
+
+        private void InitializeComboBoxes()
+        {
+            string connectionString = ConfigurationManager.AppSettings.Get("DeptAndRoles");
+            dbHelper.LoadDepartments(cmb_department);
+            dbHelper.LoadRoles(cmb_role);
+        }
+
 
         private void guna2ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -149,10 +159,9 @@ namespace equipment_accounting_system.Additional_Forms
             }
         }
 
+        private void cmb_department_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-
-
-
-
+        }
     }
 }
