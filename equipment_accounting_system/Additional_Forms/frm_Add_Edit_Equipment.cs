@@ -31,6 +31,7 @@ namespace equipment_accounting_system.Additional_Forms
             dbHelper = new db_Helper();
             dbHelper.LoadTables(connectionString, cmb_tables);
             logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
+            InitializeDateTimePickers();
         }
         public frm_Add_Edit_Equipment(int equipmentId)
         {
@@ -42,6 +43,7 @@ namespace equipment_accounting_system.Additional_Forms
             dbHelper = new db_Helper();
             dbHelper.LoadTables(connectionString, cmb_tables);
             logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
+            InitializeDateTimePickers();
         }
         public frm_Add_Edit_Equipment(EquipmentInfo equipmentInfo)
         {
@@ -53,8 +55,16 @@ namespace equipment_accounting_system.Additional_Forms
             LoadEquipmentData();
             LoadUsers();
             logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
+            InitializeDateTimePickers();
         }
+        private void InitializeDateTimePickers()
+        {
+            dtp_LastRoutineMaintenanceDate.Format = DateTimePickerFormat.Custom;
+            dtp_LastRoutineMaintenanceDate.CustomFormat = "dd-MM-yyyy";
 
+            dtp_NextRoutineMaintenanceDate.Format = DateTimePickerFormat.Custom;
+            dtp_NextRoutineMaintenanceDate.CustomFormat = "dd-MM-yyyy";
+        }
 
         private void LoadEquipmentData()
         {
@@ -121,14 +131,14 @@ namespace equipment_accounting_system.Additional_Forms
                 }
             }
         }
-        
-        
-        
 
-        
-        
-        
-        
+
+
+
+
+
+
+
         private void btn_add_image_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -259,6 +269,11 @@ namespace equipment_accounting_system.Additional_Forms
         }
 
         private void guna2GradientPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dtp_LastRoutineMaintenanceDate_ValueChanged(object sender, EventArgs e)
         {
 
         }

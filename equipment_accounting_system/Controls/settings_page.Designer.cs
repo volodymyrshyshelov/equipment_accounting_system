@@ -28,20 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pnl_settings_page = new Guna.UI2.WinForms.Guna2GradientPanel();
             guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             cmb_language = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -57,6 +59,7 @@
             columnHeader1 = new ColumnHeader();
             lbl_DB_Tables = new Label();
             label1 = new Label();
+            btn_logs = new Guna.UI2.WinForms.Guna2TileButton();
             pnl_settings_page.SuspendLayout();
             guna2Panel2.SuspendLayout();
             guna2Panel1.SuspendLayout();
@@ -66,13 +69,13 @@
             // 
             pnl_settings_page.Controls.Add(guna2Panel2);
             pnl_settings_page.Controls.Add(guna2Panel1);
-            pnl_settings_page.CustomizableEdges = customizableEdges13;
+            pnl_settings_page.CustomizableEdges = customizableEdges15;
             pnl_settings_page.Dock = DockStyle.Fill;
             pnl_settings_page.FillColor = Color.FromArgb(183, 54, 101);
             pnl_settings_page.FillColor2 = Color.FromArgb(29, 38, 113);
             pnl_settings_page.Location = new Point(0, 0);
             pnl_settings_page.Name = "pnl_settings_page";
-            pnl_settings_page.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            pnl_settings_page.ShadowDecoration.CustomizableEdges = customizableEdges16;
             pnl_settings_page.Size = new Size(1008, 546);
             pnl_settings_page.TabIndex = 1;
             // 
@@ -186,19 +189,20 @@
             guna2Panel1.BorderColor = Color.White;
             guna2Panel1.BorderRadius = 20;
             guna2Panel1.BorderThickness = 1;
+            guna2Panel1.Controls.Add(btn_logs);
             guna2Panel1.Controls.Add(btn_backup);
             guna2Panel1.Controls.Add(btn_manage_dept_roles);
             guna2Panel1.Controls.Add(lstv_tables);
             guna2Panel1.Controls.Add(lbl_DB_Tables);
             guna2Panel1.Controls.Add(label1);
             guna2Panel1.CustomBorderColor = Color.White;
-            guna2Panel1.CustomizableEdges = customizableEdges11;
+            guna2Panel1.CustomizableEdges = customizableEdges13;
             guna2Panel1.FillColor = Color.Transparent;
             guna2Panel1.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             guna2Panel1.ForeColor = SystemColors.Window;
             guna2Panel1.Location = new Point(90, 26);
             guna2Panel1.Name = "guna2Panel1";
-            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges14;
             guna2Panel1.Size = new Size(466, 489);
             guna2Panel1.TabIndex = 0;
             // 
@@ -209,7 +213,7 @@
             btn_backup.BorderRadius = 20;
             btn_backup.BorderThickness = 1;
             btn_backup.CustomBorderColor = Color.White;
-            btn_backup.CustomizableEdges = customizableEdges7;
+            btn_backup.CustomizableEdges = customizableEdges9;
             btn_backup.DisabledState.BorderColor = Color.DarkGray;
             btn_backup.DisabledState.CustomBorderColor = Color.DarkGray;
             btn_backup.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -217,11 +221,11 @@
             btn_backup.FillColor = Color.Transparent;
             btn_backup.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             btn_backup.ForeColor = Color.White;
-            btn_backup.Location = new Point(79, 355);
+            btn_backup.Location = new Point(75, 397);
             btn_backup.MinimumSize = new Size(300, 35);
             btn_backup.Name = "btn_backup";
             btn_backup.PressedColor = Color.FromArgb(43, 39, 112);
-            btn_backup.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btn_backup.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btn_backup.Size = new Size(317, 35);
             btn_backup.TabIndex = 70;
             btn_backup.Text = "Керування резервними копіями";
@@ -234,7 +238,7 @@
             btn_manage_dept_roles.BorderRadius = 20;
             btn_manage_dept_roles.BorderThickness = 1;
             btn_manage_dept_roles.CustomBorderColor = Color.White;
-            btn_manage_dept_roles.CustomizableEdges = customizableEdges9;
+            btn_manage_dept_roles.CustomizableEdges = customizableEdges11;
             btn_manage_dept_roles.DisabledState.BorderColor = Color.DarkGray;
             btn_manage_dept_roles.DisabledState.CustomBorderColor = Color.DarkGray;
             btn_manage_dept_roles.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -242,11 +246,11 @@
             btn_manage_dept_roles.FillColor = Color.Transparent;
             btn_manage_dept_roles.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             btn_manage_dept_roles.ForeColor = Color.White;
-            btn_manage_dept_roles.Location = new Point(79, 396);
+            btn_manage_dept_roles.Location = new Point(75, 438);
             btn_manage_dept_roles.MinimumSize = new Size(300, 35);
             btn_manage_dept_roles.Name = "btn_manage_dept_roles";
             btn_manage_dept_roles.PressedColor = Color.FromArgb(43, 39, 112);
-            btn_manage_dept_roles.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btn_manage_dept_roles.ShadowDecoration.CustomizableEdges = customizableEdges12;
             btn_manage_dept_roles.Size = new Size(317, 35);
             btn_manage_dept_roles.TabIndex = 69;
             btn_manage_dept_roles.Text = "Керування відділами та посадами";
@@ -294,6 +298,31 @@
             label1.Text = "Налаштування бази даних";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btn_logs
+            // 
+            btn_logs.BackColor = Color.Transparent;
+            btn_logs.BorderColor = Color.White;
+            btn_logs.BorderRadius = 20;
+            btn_logs.BorderThickness = 1;
+            btn_logs.CustomBorderColor = Color.White;
+            btn_logs.CustomizableEdges = customizableEdges7;
+            btn_logs.DisabledState.BorderColor = Color.DarkGray;
+            btn_logs.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_logs.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_logs.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_logs.FillColor = Color.Transparent;
+            btn_logs.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_logs.ForeColor = Color.White;
+            btn_logs.Location = new Point(75, 356);
+            btn_logs.MinimumSize = new Size(300, 35);
+            btn_logs.Name = "btn_logs";
+            btn_logs.PressedColor = Color.FromArgb(43, 39, 112);
+            btn_logs.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btn_logs.Size = new Size(317, 35);
+            btn_logs.TabIndex = 71;
+            btn_logs.Text = "Відкрити журнал дій";
+            btn_logs.Click += btn_logs_Click;
+            // 
             // settings_page
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -339,5 +368,6 @@
         private Guna.UI2.WinForms.Guna2TileButton btn_manage_dept_roles;
         private Guna.UI2.WinForms.Guna2TileButton btn_backup;
         private ColumnHeader columnHeader1;
+        private Guna.UI2.WinForms.Guna2TileButton btn_logs;
     }
 }

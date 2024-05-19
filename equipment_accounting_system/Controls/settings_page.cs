@@ -163,5 +163,11 @@ namespace equipment_accounting_system.Controls
                 return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
             }
         }
+
+        private void btn_logs_Click(object sender, EventArgs e)
+        {
+            frm_Logs logsForm = new frm_Logs();
+            logsForm.ShowDialog();
+        }
     }
 }

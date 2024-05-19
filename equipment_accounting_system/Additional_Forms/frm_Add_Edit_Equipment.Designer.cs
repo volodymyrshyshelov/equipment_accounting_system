@@ -58,6 +58,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
             guna2GradientPanel1 = new Guna.UI2.WinForms.Guna2GradientPanel();
+            label11 = new Label();
             cmb_tables = new Guna.UI2.WinForms.Guna2ComboBox();
             label10 = new Label();
             cmbWorkerUsername = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -94,6 +95,7 @@
             // 
             // guna2GradientPanel1
             // 
+            guna2GradientPanel1.Controls.Add(label11);
             guna2GradientPanel1.Controls.Add(cmb_tables);
             guna2GradientPanel1.Controls.Add(label10);
             guna2GradientPanel1.Controls.Add(cmbWorkerUsername);
@@ -127,6 +129,19 @@
             guna2GradientPanel1.Size = new Size(611, 494);
             guna2GradientPanel1.TabIndex = 0;
             guna2GradientPanel1.Paint += guna2GradientPanel1_Paint;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.BackColor = Color.Transparent;
+            label11.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label11.ForeColor = SystemColors.Window;
+            label11.Location = new Point(321, 245);
+            label11.Name = "label11";
+            label11.Size = new Size(198, 18);
+            label11.TabIndex = 104;
+            label11.Text = "Таблиця для збереження";
+            label11.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // cmb_tables
             // 
@@ -320,6 +335,7 @@
             dtp_LastRoutineMaintenanceDate.Size = new Size(276, 35);
             dtp_LastRoutineMaintenanceDate.TabIndex = 94;
             dtp_LastRoutineMaintenanceDate.Value = new DateTime(2024, 5, 15, 18, 52, 15, 133);
+            dtp_LastRoutineMaintenanceDate.ValueChanged += dtp_LastRoutineMaintenanceDate_ValueChanged;
             // 
             // label6
             // 
@@ -616,5 +632,6 @@
         private Label label10;
         private Guna.UI2.WinForms.Guna2ComboBox cmbWorkerUsername;
         private Guna.UI2.WinForms.Guna2ComboBox cmb_tables;
+        private Label label11;
     }
 }
