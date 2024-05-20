@@ -157,7 +157,7 @@ namespace equipment_accounting_system.Additional_Forms
                 using (var conn = new NpgsqlConnection(ConfigurationManager.AppSettings.Get("LogAndReg")))
                 {
                     conn.Open();
-                    string insertQuery = "INSERT INTO UserList (Username, PasswordHash, Email, FullName, ProfileImage) VALUES (@Username, @PasswordHash, @Email, @FullName, @ProfileImage) RETURNING id";
+                    string insertQuery = "INSERT INTO UserList (Username, PasswordHash, Email, FullName, ProfileImage) VALUES (@Username, @PasswordHash, @Email, @FullName, @ProfileImage) RETURNING userid";
                     using (var cmd = new NpgsqlCommand(insertQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@Username", txt_username.Text);

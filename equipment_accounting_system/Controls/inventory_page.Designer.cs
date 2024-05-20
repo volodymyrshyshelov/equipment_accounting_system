@@ -69,13 +69,14 @@
             // 
             dgv_inventory.AllowUserToAddRows = false;
             dgv_inventory.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.White;
+            dgv_inventory.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(100, 46, 100);
             dataGridViewCellStyle1.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = Color.Black;
+            dataGridViewCellStyle1.ForeColor = Color.White;
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(175, 53, 102);
             dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dgv_inventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgv_inventory.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgv_inventory.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             dgv_inventory.BackgroundColor = Color.FromArgb(72, 43, 110);
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(72, 43, 110);
@@ -112,6 +113,9 @@
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             dgv_inventory.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgv_inventory.RowHeadersVisible = false;
+            dgv_inventory.RowTemplate.DefaultCellStyle.BackColor = Color.FromArgb(64, 0, 64);
+            dgv_inventory.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.FromArgb(64, 0, 64);
+            dgv_inventory.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.FromArgb(224, 224, 224);
             dgv_inventory.RowTemplate.Height = 25;
             dgv_inventory.Size = new Size(1008, 503);
             dgv_inventory.TabIndex = 2;
@@ -136,6 +140,7 @@
             dgv_inventory.ThemeStyle.RowsStyle.Height = 25;
             dgv_inventory.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(175, 53, 102);
             dgv_inventory.ThemeStyle.RowsStyle.SelectionForeColor = Color.White;
+            dgv_inventory.CellContentClick += dgv_inventory_CellContentClick;
             // 
             // guna2Panel1
             // 

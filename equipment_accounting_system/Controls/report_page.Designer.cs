@@ -141,6 +141,7 @@
             dgv_reports.ThemeStyle.RowsStyle.Height = 25;
             dgv_reports.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(175, 53, 102);
             dgv_reports.ThemeStyle.RowsStyle.SelectionForeColor = Color.White;
+            dgv_reports.CellContentClick += dgv_reports_CellContentClick;
             // 
             // guna2Panel1
             // 

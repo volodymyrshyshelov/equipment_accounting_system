@@ -83,7 +83,9 @@ namespace equipment_accounting_system.Additional_Forms
                     using (var conn = new NpgsqlConnection(ConfigurationManager.AppSettings.Get("Inventory")))
                     {
                         conn.Open();
-                        string selectQuery = "SELECT * FROM equipment1 WHERE Id = @Id";
+                        string tableName = cmb_tables.SelectedItem?.ToString() ?? "equipment1";
+                        string selectQuery = $"SELECT * FROM {tableName} WHERE Id = @Id";
+
                         using (var cmd = new NpgsqlCommand(selectQuery, conn))
                         {
                             cmd.Parameters.AddWithValue("@Id", equipmentId.Value);
@@ -113,16 +115,15 @@ namespace equipment_accounting_system.Additional_Forms
                             }
                         }
 
-                        var logEntry = new log_Entry
-                        {
-                            UserId = 0,
-                            TableName = "equipment1",
-                            LogType = "INFO",
-                            LogMessage = "Завантаження даних обладнання.",
-                            Details = $"Equipment ID: {equipmentId.Value}"
-                        };
-                        logHelper.InsertLogEntry(logEntry);
-
+                        //var logEntry = new log_Entry
+                        //{
+                        //    UserId = 0,
+                        //    TableName = tableName,
+                        //    LogType = "INFO",
+                        //    LogMessage = "Завантаження даних обладнання.",
+                        //    Details = $"Equipment ID: {equipmentId.Value}"
+                        //};
+                        //logHelper.InsertLogEntry(logEntry);
                     }
                 }
                 catch (Exception ex)
@@ -131,6 +132,7 @@ namespace equipment_accounting_system.Additional_Forms
                 }
             }
         }
+
 
 
 
@@ -207,19 +209,20 @@ namespace equipment_accounting_system.Additional_Forms
                         }
 
                         cmd.ExecuteNonQuery();
+                        var logEntry = new log_Entry
+                        {
+                            UserId = 0,
+                            TableName = tableName,
+                            LogType = equipmentId.HasValue ? "INFO" : "INSERT",
+                            LogMessage = equipmentId.HasValue ? "Оновлення даних обладнання." : "Додано новий запис.",
+                            Details = $"InventoryNumber: {txt_inventory_number.Text}, Name: {txt_name.Text}"
+                        };
+                        logHelper.InsertLogEntry(logEntry);
                     }
 
                     MessageBox.Show("Данные успешно сохранены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    var logEntry = new log_Entry
-                    {
-                        UserId = 0,
-                        TableName = tableName,
-                        LogType = equipmentId.HasValue ? "INFO" : "INSERT",
-                        LogMessage = equipmentId.HasValue ? "Оновлення даних обладнання." : "Додано новий запис.",
-                        Details = $"InventoryNumber: {txt_inventory_number.Text}, Name: {txt_name.Text}"
-                    };
-                    logHelper.InsertLogEntry(logEntry);
+                    
 
 
 

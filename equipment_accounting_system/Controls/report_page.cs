@@ -24,6 +24,7 @@ namespace equipment_accounting_system.Controls
             cmb_type_1.SelectedIndexChanged += cmb_type_SelectedIndexChanged;
             cmb_type_2.SelectedIndexChanged += cmb_type_2_SelectedIndexChanged;
             cmb_type_3.SelectedIndexChanged += cmb_type_3_SelectedIndexChanged;
+            dgv_reports.CellFormatting += dgv_reports_CellFormatting;
         }
         private void cmb_type_1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -36,6 +37,19 @@ namespace equipment_accounting_system.Controls
         private void cmb_type_3_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadReportData();
+        }
+        private void dgv_reports_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgv_reports.Columns[e.ColumnIndex].Name == "eqimage" && e.Value != null)
+            {
+                byte[] imageBytes = (byte[])e.Value;
+                using (MemoryStream ms = new MemoryStream(imageBytes))
+                {
+                    Image img = Image.FromStream(ms);
+                    e.Value = new Bitmap(img, new Size(50, 50));
+                }
+                e.FormattingApplied = true;
+            }
         }
         private void btn_export_Click(object sender, EventArgs e)
         {
@@ -204,7 +218,7 @@ namespace equipment_accounting_system.Controls
             }
 
             string tableName = selectedType1 == "Отчеты по оборудованию" ? "equipment1" : "planning";
-            string columnName = GetColumnName(selectedType2,tableName);
+            string columnName = GetColumnName(selectedType2, tableName);
             string connectionStringKey = selectedType1 == "Отчеты по оборудованию" ? "Inventory" : "Planning";
 
             string sql;
@@ -268,7 +282,10 @@ namespace equipment_accounting_system.Controls
             }
         }
 
+        private void dgv_reports_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
    

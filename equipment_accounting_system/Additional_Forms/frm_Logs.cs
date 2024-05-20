@@ -162,5 +162,10 @@ namespace equipment_accounting_system.Additional_Forms
                 }
             }
         }
+
+        private void guna2TileButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();   
+        }
     }
 }

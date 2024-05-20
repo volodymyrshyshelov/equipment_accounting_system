@@ -25,7 +25,23 @@ namespace equipment_accounting_system.Controls
             LoadTables();
             InitializeContextMenu();
             logHelper = new log_Helper(ConfigurationManager.AppSettings.Get("LogConnection"));
+            dgv_inventory.CellFormatting += dgv_inventory_CellFormatting;
         }
+        private void dgv_inventory_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgv_inventory.Columns[e.ColumnIndex].Name == "eqimage" && e.Value != null)
+            {
+                byte[] imageBytes = (byte[])e.Value;
+                using (MemoryStream ms = new MemoryStream(imageBytes))
+                {
+                    Image img = Image.FromStream(ms);
+                    e.Value = new Bitmap(img, new Size(50, 50));
+                }
+                e.FormattingApplied = true;
+            }
+        }
+
+
         private void inventory_page_Load(object sender, EventArgs e)
         {
 
@@ -241,6 +257,9 @@ namespace equipment_accounting_system.Controls
             }
         }
 
+        private void dgv_inventory_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
